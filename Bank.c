@@ -12,6 +12,8 @@
 #include "customer.h"
 #include "queue.h"
 
+
+
 struct Bank {
 	unsigned long 	customersServiced;
 	unsigned long 	totalTimeInQueue;
@@ -30,6 +32,8 @@ int main(void) {
 
 
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+
+
 
 	destroyTellers();
 	destroyQueue();
