@@ -33,6 +33,28 @@ void destroyQueue(){
 	sem_destroy(&turnSemaphore);
 }
 
-void doAction(){
+int doAction(){
+	int turn = -1;
 
+	//Get the turn, and check if its my turn
+	if( sem_getValue( &turnSemaphore, &turn ) != -1 && (turn % 4 == 0) ){
+		//Are we open
+		if( turn < 3360){
+			if (--tNextCust == 0){
+				Customer *newCust = (Customer *) malloc(sizeof(Customer));
+
+				pushQueue(newCust);
+			}
+			return 1;
+		} else { //Not open
+
+		}
+	}
+}
+
+int getQueueSize(){
+	pthread_mutex_lock(&queueLock);
+	int value = numInQueue;
+	pthread_mutex_unlock(&queueLock);
+	return value;
 }

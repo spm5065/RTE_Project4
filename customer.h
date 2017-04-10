@@ -15,9 +15,12 @@ struct Teller;
 typedef struct Customer Customer;
 
 struct Customer {
-	unsigned long 	timeInQueue;
-	unsigned long 	timeWithTeller;
-	struct Teller 		   *tellerWith;
+	unsigned long 	 timeInQueue;
+	unsigned long 	 timeWithTeller;
 };
+
+void initCust(Customer *cust);
+void bumpCustQueueTime(Customer *cust);
+void bumpCustTellerTime(Customer *cust);
 
 #endif /* CUSTOMER_H_ */

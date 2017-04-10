@@ -1,5 +1,8 @@
 #pragma once
 
+//All times are in increments of 30seconds
+#define PERIODS_PER_MINUTE 2
+
 unsigned char RandomNextCustomerTime();	//Get time for next customer to appear in queue in minutes
 unsigned short RandomTransactionTime();	//Get time to service a customer in increments of 30seconds
 unsigned short RandomBreakLength();		//Get length of next break ( 1 to 4 min)

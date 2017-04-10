@@ -19,10 +19,10 @@ struct Bank {
 	unsigned long 	totalTimeInQueue;
 	unsigned long 	totalTimeWithTellers;
 	unsigned long	totalTellerDowntime;
-	unsigned int 	numInQueue;
+	unsigned long 	numInQueue;
 	unsigned long	maxTimeInQueueCust;
 	unsigned long	maxTimeInTransaction;
-	unsigned int 	maxNumInQueue;
+	unsigned long 	maxNumInQueue;
 } Bank = {0,0,0,0,0,0,0,0};
 
 int main(void) {
