@@ -24,15 +24,15 @@ struct Bank {
 } Bank = {0,0,0,0,0,0,0,0};
 
 int main(void) {
-	initTellers();
 	initQueue();
+	initTellers();
+
 
 
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
 
-
-	destroyQueue();
 	destroyTellers();
+	destroyQueue();
 	return EXIT_SUCCESS;
 }
 
