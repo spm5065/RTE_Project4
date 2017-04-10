@@ -15,6 +15,7 @@
 extern Customer 		*queue[QUEUE_SIZE];
 extern int 		 	 	 numInQueue;
 extern pthread_mutex_t 	 queueLock;
+extern sem_t			 turnSemaphore;
 
 void initQueue();
 void destroyQueue();
