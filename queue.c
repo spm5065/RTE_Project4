@@ -10,8 +10,9 @@ Customer 			*queue[QUEUE_SIZE];
 int 		 	 	 numInQueue;
 pthread_mutex_t 	 queueLock;
 sem_t				 turnSemaphore;
+int 				 tNextCust = 0;
 
-void initQueue(){
+void initQueue() {
 	memset( queue, 0, sizeof(Customer *) * QUEUE_SIZE );
 
 	if (pthread_mutex_init( &queueLock, NULL)) {
@@ -37,18 +38,21 @@ int doAction(){
 	int turn = -1;
 
 	//Get the turn, and check if its my turn
-	if( sem_getValue( &turnSemaphore, &turn ) != -1 && (turn % 4 == 0) ){
+	if( sem_getvalue( &turnSemaphore, &turn ) != -1 && (turn % 4 == 0) ){
+		sem_wait(&turnSemaphore);
 		//Are we open
 		if( turn < 3360){
-			if (--tNextCust == 0){
+			if (--tNextCust == 0) {
 				Customer *newCust = (Customer *) malloc(sizeof(Customer));
 
 				pushQueue(newCust);
+				tNextCust = RandomNextCustomerTime();
 			}
 			return 1;
 		} else { //Not open
 
 		}
+		sem_post(&turnSemaphore);
 	}
 }
 
@@ -58,3 +62,11 @@ int getQueueSize(){
 	pthread_mutex_unlock(&queueLock);
 	return value;
 }
+
+void pushQueue(Customer *cust){
+	pthread_mutex_lock(&queueLock);
+	queue[numInQueue++] = cust;
+	pthread_mutex_unlock(&queueLock);
+}
+
+

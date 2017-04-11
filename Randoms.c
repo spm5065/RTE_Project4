@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Randoms.h"
 
 //Get time for next customer to appear in queue
 unsigned char RandomNextCustomerTime(){
