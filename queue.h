@@ -17,8 +17,6 @@ extern int 		 	 	 numInQueue;
 extern pthread_mutex_t 	 queueLock;
 extern sem_t			 turnSemaphore;
 
-int tNextCust = 0;
-
 void initQueue();
 void destroyQueue();
 
