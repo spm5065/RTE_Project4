@@ -13,5 +13,7 @@
 #include <pthread.h>
 #include <string.h>
 #include <semaphore.h>
+#include <time.h>
+#include "Bank.h"
 
 #endif /* STDHDR_H_ */
