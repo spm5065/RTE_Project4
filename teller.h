@@ -22,6 +22,7 @@ struct Teller {
 	unsigned int 	numBreaks;		//Number of breaks
 	unsigned long 	downTime;		//Time Teller has been waiting for customers
 	struct Customer	   *customerWith;
+	int 			tellerNum;
 };
 
 //void runTeller(&);

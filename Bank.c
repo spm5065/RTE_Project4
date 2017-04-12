@@ -12,18 +12,7 @@
 #include "customer.h"
 #include "queue.h"
 
-
-
-struct Bank {
-	unsigned long 	customersServiced;
-	unsigned long 	totalTimeInQueue;
-	unsigned long 	totalTimeWithTellers;
-	unsigned long	totalTellerDowntime;
-	unsigned long 	numInQueue;
-	unsigned long	maxTimeInQueueCust;
-	unsigned long	maxTimeInTransaction;
-	unsigned long 	maxNumInQueue;
-} Bank = {0,0,0,0,0,0,0,0};
+struct BANK Bank = {0,0,0,0,0,0,0,0};
 
 int main(void) {
 	initQueue();
@@ -33,7 +22,9 @@ int main(void) {
 
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
 
+	doQueueAction();
 
+	puts("!!!Hello World2!!!");
 
 	destroyTellers();
 	destroyQueue();

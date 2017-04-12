@@ -23,6 +23,6 @@ void destroyQueue();
 Customer 	*popQueue();
 void	  	 pushQueue( Customer * );
 int			 getQueueSize();
-
+int 		 doQueueAction();
 
 #endif /* QUEUE_H_ */
