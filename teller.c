@@ -62,7 +62,7 @@ int doTellerAction(Teller *t){
 					Bank.maxTimeInTransaction = t->customerWith->timeWithTeller;
 
 				if(t->customerWith->timeInQueue > Bank.maxTimeInQueueCust)
-					Bank.maxTimeInQueue = t->customerWith->timeInQueue;
+					Bank.maxTimeInQueueCust = t->customerWith->timeInQueue;
 
 				Bank.totalTimeWithTellers += t->customerWith->timeWithTeller;
 				Bank.customersServiced++;
