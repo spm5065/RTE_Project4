@@ -24,7 +24,7 @@ int main(void) {
 
 	doQueueAction();
 
-	puts("!!!Hello World2!!!");
+	puts("!!!Goodbye Cruel World!!!");
 
 	destroyTellers();
 	destroyQueue();
