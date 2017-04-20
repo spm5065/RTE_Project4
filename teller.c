@@ -36,11 +36,11 @@ int doTellerAction(Teller *t){
 	int rc = 1;		//Return Code
 
 	//Get the turn, and check if its my turn
-	if( sem_getvalue( &turnSemaphore, &turn ) != -1 && (turn % 4 == t->tellerNum) ){
-		sem_wait(&turnSemaphore);
+	if( sem_getvalue( &turnSemaphore, &turn ) == 0 || (turn % 4 == t->tellerNum) ){
+
 
 		//No Customer
-		if(customerWith == NULL){
+		if(t->customerWith == NULL){
 
 			//If people in queue, get customer
 			if(getQueueSize()){
@@ -50,7 +50,7 @@ int doTellerAction(Teller *t){
 
 			//else check if we need to continue
 			} else {
-				if(t <= 3360)
+				if(turn != 0)
 					t->downTime++;
 				else
 					rc = 0;
@@ -73,7 +73,7 @@ int doTellerAction(Teller *t){
 			}
 		}
 
-		sem_post(&turnSemaphore);
+		sem_wait(&turnSemaphore);
 	}
 
 	return rc;

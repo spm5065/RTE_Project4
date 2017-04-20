@@ -23,6 +23,7 @@ struct Teller {
 	unsigned long 	downTime;		//Time Teller has been waiting for customers
 	struct Customer	   *customerWith;
 	int 			tellerNum;
+	unsigned long	timeRem;
 };
 
 //void runTeller(&);

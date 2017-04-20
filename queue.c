@@ -4,6 +4,7 @@
  *  Created on: Apr 3, 2017
  *      Author: spm5065
  */
+
 #include "queue.h"
 #include <time.h>
 
@@ -21,8 +22,8 @@ void initQueue() {
 		puts("Failed to initialize the mutex.");
 	}
 
-	if ( sem_init(&turnSemaphore, 0, -1) ){
-		puts("Failed to initalize the semaphore.");
+	if ( sem_init(&turnSemaphore, 0, 3360) ){
+		puts("Failed to initialize the semaphore.");
 	}
 	sem_post(&turnSemaphore);
 }
@@ -56,10 +57,9 @@ int doQueueAction(){
 	int rc = 1;		//Return Code
 
 	//Get the turn, and check if its my turn
-	if( sem_getvalue( &turnSemaphore, &turn ) != -1 && (turn % 4 == 0) ){
-		sem_wait(&turnSemaphore);
+	if( (turn % 4 == 0) ){
 		//Are we open
-		if( turn < 3360){
+		if( turn > 0){
 			if (--tNextCust == 0) {
 				Customer *newCust = (Customer *) malloc(sizeof(Customer));
 
@@ -77,7 +77,7 @@ int doQueueAction(){
 		t.tv_nsec = 50000000;
 		nanosleep(&t, NULL);
 
-		sem_post(&turnSemaphore);
+		sem_wait(&turnSemaphore);
 	}
 	return rc;
 }
