@@ -16,7 +16,7 @@ unsigned char RandomNextCustomerTime(){
 
 //Get time to service a customer in increments of 30seconds ( 30 seconds to 8 minutes )
 unsigned short RandomTransactionTime(){
-	return (short) (( rand() % 16 + 1 ) * PERIODS_PER_MINUTE >> 2);
+	return (short) ( rand() % 16 + 1 );
 }
 
 //Get length of next break ( 1 to 4 min)

@@ -24,12 +24,15 @@ struct Teller {
 	struct Customer	   *customerWith;
 	int 			tellerNum;
 	unsigned long	timeRem;
+	long			timeToBreak;
+	long			timeLeftOnBreak;
 };
 
 //void runTeller(&);
 
 void initTellers();
 void destroyTellers();
+void runTeller( Teller *t );
 
 extern Teller *tellers[3];
 

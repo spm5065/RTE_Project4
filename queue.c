@@ -4,9 +4,8 @@
  *  Created on: Apr 3, 2017
  *      Author: spm5065
  */
-
-#include "queue.h"
 #include <time.h>
+#include "queue.h"
 
 Customer 			*queue[QUEUE_SIZE];
 int 		 	 	 numInQueue;
@@ -25,7 +24,7 @@ void initQueue() {
 	if ( sem_init(&turnSemaphore, 0, 3360) ){
 		puts("Failed to initialize the semaphore.");
 	}
-	sem_post(&turnSemaphore);
+
 }
 
 //Cleanup queue
@@ -57,10 +56,11 @@ int doQueueAction(){
 	int rc = 1;		//Return Code
 
 	//Get the turn, and check if its my turn
-	if( (turn % 4 == 0) ){
+	if( (sem_getvalue( &turnSemaphore, &turn ) != -1) && (turn % 4 == 0) ){
+
 		//Are we open
-		if( turn > 0){
-			if (--tNextCust == 0) {
+		if(turn > 0){
+			if (--tNextCust <= 0) {
 				Customer *newCust = (Customer *) malloc(sizeof(Customer));
 
 				pushQueue(newCust);
@@ -77,13 +77,20 @@ int doQueueAction(){
 		t.tv_nsec = 50000000;
 		nanosleep(&t, NULL);
 
-		sem_wait(&turnSemaphore);
+		if (turn != 0) sem_wait(&turnSemaphore);
 	}
+
+	struct timespec t;
+	t.tv_sec = 0;
+	t.tv_nsec = 5000;
+	nanosleep(&t, NULL);
+
 	return rc;
 }
 
 void runQueue(){
-	while (doQueueAction()){}//doAction endlessly
+	int i = 0;
+	while (doQueueAction() && i < 100000){i++;}//doAction endlessly
 }
 //Thread-safe queue grab
 int getQueueSize(){
@@ -97,6 +104,7 @@ int getQueueSize(){
 void pushQueue(Customer *cust){
 	pthread_mutex_lock(&queueLock);
 	queue[numInQueue++] = cust;
+	if(Bank.maxNumInQueue < numInQueue) Bank.maxNumInQueue = numInQueue;
 	pthread_mutex_unlock(&queueLock);
 }
 
@@ -105,13 +113,17 @@ Customer *popQueue(){
 	//Get a lock on the mutex
 	pthread_mutex_lock(&queueLock);
 
-	//Get customer and dec num in queue
-	Customer *returnCust = queue[0];
-	numInQueue--;
+	Customer *returnCust = NULL;
+	if( numInQueue > 0) {
 
-	//shift people forward in queue and remove dupe
-	memcpy(&queue[0], &queue[1], sizeof(Customer *) * (QUEUE_SIZE - 1) );
-	queue[QUEUE_SIZE - 1] = 0;
+		//Get customer and dec num in queue
+		returnCust = queue[0];
+		numInQueue--;
+
+		//shift people forward in queue and remove dupe
+		memcpy(&queue[0], &queue[1], sizeof(Customer *) * (QUEUE_SIZE - 1) );
+		queue[QUEUE_SIZE - 1] = 0;
+	}
 
 	//Unlock the mutex
 	pthread_mutex_unlock(&queueLock);
