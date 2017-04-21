@@ -14,6 +14,7 @@ struct BANK {
 	unsigned long 	totalTimeInQueue;
 	unsigned long 	totalTimeWithTellers;
 	unsigned long	totalTellerDowntime;
+	unsigned long	totalTellerIdles;
 	unsigned long 	numInQueue;
 	unsigned long	maxTimeInQueueCust;
 	unsigned long	maxTimeInTransaction;

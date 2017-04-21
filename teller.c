@@ -62,7 +62,9 @@ int doTellerAction(Teller *t){
 					if(turn != 0)
 						t->downTime++;
 					else {
+
 						Bank.totalTellerDowntime += t->downTime;
+						Bank.totalTellerIdles ++;
 						rc = 0;
 					}
 				}
