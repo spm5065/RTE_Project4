@@ -32,22 +32,18 @@ void calculate_metrics(){
 	printf("Longest Line: %f\r\n ", (float)Bank.maxNumInQueue );
 
 	//Total Breaks Per
-	printf("Teller One Total Breaks: %f\r\n ", (float)tellers[0]->numBreaks );
-	printf("Teller Two Total Breaks: %f\r\n ", (float)tellers[1]->numBreaks );
-	printf("Teller Three Total Breaks: %f\r\n ", (float)tellers[2]->numBreaks );
+	for(int i = 0; i < 3; i++)
+		printf("Teller %d Total Breaks: %f\r\n ", tellers[i]->tellerNum, (float)tellers[i]->numBreaks );
 
 	//Average break Per
-	printf("Teller One Average Break: %f minutes\r\n ", ((float)(tellers[0]->totalBreak)/((float)tellers[0]->numBreaks))/2. );
-	printf("Teller Two Average Break: %f minutes\r\n ", ((float)(tellers[1]->totalBreak)/((float)tellers[1]->numBreaks))/2. );
-	printf("Teller Three Average Break: %f minutes\r\n ", ((float)(tellers[2]->totalBreak)/((float)tellers[2]->numBreaks))/2. );
+	for(int i = 0; i < 3; i++)
+		printf("Teller %d Average Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)(tellers[i]->totalBreak)/((float)tellers[i]->numBreaks))/2. );
 
 	//Longest Break Per
-	printf("Teller One Longest Break: %f minutes\r\n ", ((float)tellers[0]->maxBreak)/2. );
-	printf("Teller Two Longest Break: %f minutes\r\n ", ((float)tellers[1]->maxBreak)/2. );
-	printf("Teller Three TLongest Break: %f minutes\r\n ", ((float)tellers[2]->maxBreak)/2. );
+	for(int i = 0; i < 3; i++)
+		printf("Teller %d Longest Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)tellers[i]->maxBreak)/2. );
 
 	//Shortest Break Per
-	printf("Teller One Shortest Break: %f minutes\r\n ", ((float)tellers[0]->minBreak)/2. );
-	printf("Teller Two Shortest Break: %f minutes\r\n ", ((float)tellers[1]->minBreak)/2. );
-	printf("Teller Three Shortest Break: %f minutes\r\n ", ((float)tellers[2]->minBreak)/2. );
+	for(int i = 0; i < 3; i++)
+		printf("Teller %d Shortest Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)tellers[i]->minBreak)/2. );
 }
