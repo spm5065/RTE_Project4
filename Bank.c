@@ -18,6 +18,8 @@ struct BANK Bank = {0,0,0,0,0,0,0,0};
 pthread_t tellerThreads[3];
 
 int main(void) {
+	time_t t;
+	srand((unsigned) time(&t));
 	initQueue();
 	initTellers();
 

@@ -14,7 +14,7 @@ void calculate_metrics(){
 	printf(" Total Customers Serviced: %f\r\n " , (float)Bank.customersServiced);
 
 	//Average Queue Time
-	printf("Average Queue Time: %f minutes\r\n " , ((float)(Bank.totalTimeInQueue/ (float) Bank.customersServiced))/2. );
+	printf("Average Queue Time: %f minutes\r\n " , ((float)((Bank.totalTimeInQueue/2.)/ (float) Bank.customersServiced))/2. );
 
 	//Maximum Queue Time
 	printf("Maximum Queue Time: %f minutes\r\n ", ((float)Bank.maxTimeInQueueCust)/2. );
@@ -31,19 +31,21 @@ void calculate_metrics(){
 	//Longest Line
 	printf("Longest Line: %f\r\n ", (float)Bank.maxNumInQueue );
 
-	//Total Breaks Per
-	for(int i = 0; i < 3; i++)
-		printf("Teller %d Total Breaks: %f\r\n ", tellers[i]->tellerNum, (float)tellers[i]->numBreaks );
+	if (1){
+		//Total Breaks Per
+		for(int i = 0; i < 3; i++)
+			printf("Teller %d Total Breaks: %f\r\n ", tellers[i]->tellerNum, (float)tellers[i]->numBreaks );
 
-	//Average break Per
-	for(int i = 0; i < 3; i++)
-		printf("Teller %d Average Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)(tellers[i]->totalBreak)/((float)tellers[i]->numBreaks))/2. );
+		//Average break Per
+		for(int i = 0; i < 3; i++)
+			printf("Teller %d Average Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)(tellers[i]->totalBreak)/((float)tellers[i]->numBreaks))/2. );
 
-	//Longest Break Per
-	for(int i = 0; i < 3; i++)
-		printf("Teller %d Longest Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)tellers[i]->maxBreak)/2. );
+		//Longest Break Per
+		for(int i = 0; i < 3; i++)
+			printf("Teller %d Longest Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)tellers[i]->maxBreak)/2. );
 
-	//Shortest Break Per
-	for(int i = 0; i < 3; i++)
-		printf("Teller %d Shortest Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)tellers[i]->minBreak)/2. );
+		//Shortest Break Per
+		for(int i = 0; i < 3; i++)
+			printf("Teller %d Shortest Break: %f minutes\r\n ", tellers[i]->tellerNum, ((float)tellers[i]->minBreak)/2. );
+	}
 }
