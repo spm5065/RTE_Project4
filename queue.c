@@ -25,6 +25,8 @@ void initQueue() {
 		puts("Failed to initialize the semaphore.");
 	}
 
+	tNextCust = RandomNextCustomerTime();
+
 }
 
 //Cleanup queue

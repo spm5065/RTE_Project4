@@ -26,6 +26,9 @@ struct Teller {
 	unsigned long	timeRem;
 	long			timeToBreak;
 	long			timeLeftOnBreak;
+	char			onBreak;
+	char			idle;
+	long			numIdles;
 };
 
 //void runTeller(&);

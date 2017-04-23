@@ -7,6 +7,7 @@
 
 #include "teller.h"
 #include "queue.h"
+#include "Randoms.h"
 
 Teller *tellers[3];
 
@@ -22,8 +23,11 @@ void initTellers(){
 		t->customerWith		= NULL;
 		t->tellerNum 		= i+1;
 		t->timeRem			= 0;
-		t->timeToBreak		= 0;
-		t->timeLeftOnBreak	= 0;
+		t->timeToBreak		= RandomBreakTime();
+		t->timeLeftOnBreak	= RandomBreakLength();
+		t->onBreak			= 0;
+		t->idle				= 0;
+		t->numIdles			= 0;
 	}
 }
 
@@ -41,43 +45,55 @@ int doTellerAction(Teller *t){
 	//Get the turn, and check if its my turn
 	if( sem_getvalue( &turnSemaphore, &turn ) == 0 && ( (turn % 4 == t->tellerNum) || (turn == 0) ) ){
 
+		--t->timeToBreak;
 
 		//No Customer
 		if(t->customerWith == NULL){
 
-			if(--t->timeToBreak > 0) {
+			//If not on break try to get a customer
+			if(t->timeToBreak > 0) {
+
 				//If people in queue, get customer
 				if(getQueueSize()){
 					t->customerWith = popQueue();
 					t->timeRem = RandomTransactionTime();
 					t->customerWith->timeWithTeller = t->timeRem;
-//					Bank.customersServiced++;
-//					Bank.totalTimeInQueue += t->customerWith->timeInQueue;
-//					Bank.totalTimeWithTellers += t->customerWith->timeWithTeller;
-//					if(t->customerWith->timeInQueue > Bank.maxTimeInQueueCust) Bank.maxTimeInQueueCust = t->customerWith->timeInQueue;
-//					if(t->customerWith->timeWithTeller > Bank.maxTimeInTransaction) Bank.maxTimeInTransaction = t->customerWith->timeWithTeller;
+					t->idle = 0;
 
-				//else check if we need to continue
+				//check if we need to continue, or we can go home
 				} else {
-					if(turn != 0)
+					if(turn != 0) {
+						if (t->idle == 0) {
+							t->idle = 1;
+							t->numIdles++;
+						}
+
 						t->downTime++;
-					else {
+					} else {
 
 						Bank.totalTellerDowntime += t->downTime;
-						Bank.totalTellerIdles += Bank.totalTellerIdles + 3;
+						Bank.totalTellerIdles += t->numIdles;
 						rc = 0;
 					}
 				}
+
 			} else {
+
+				if (t->onBreak == 0) {
+					if(t->maxBreak < t->timeLeftOnBreak || t->maxBreak == 0) t->maxBreak = t->timeLeftOnBreak;
+					if(t->minBreak > t->timeLeftOnBreak || t->minBreak == 0) t->minBreak = t->timeLeftOnBreak;
+
+					t->numBreaks++;
+					t->totalBreak += t->timeLeftOnBreak;
+					t->onBreak = 1;
+				}
+
 				if(--t->timeLeftOnBreak <= 0) {
 					t->timeToBreak = RandomBreakTime();
 					t->timeLeftOnBreak = RandomBreakLength();
-					t->numBreaks++;
-
-					if(t->maxBreak < t->timeLeftOnBreak || t->maxBreak == 0) t->maxBreak = t->timeLeftOnBreak;
-					if(t->minBreak > t->timeLeftOnBreak || t->minBreak == 0) t->minBreak = t->timeLeftOnBreak;
-					t->totalBreak += t->timeLeftOnBreak;
+					t->onBreak = 0;
 				}
+
 			}
 
 		} else {
