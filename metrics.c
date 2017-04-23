@@ -11,7 +11,7 @@
 void calculate_metrics(){
 
 	//Total Customers Serviced
-	printf(" Total Customers Serviced: %f\r\n " , (float)Bank.customersServiced);
+	printf(" Total Customers Serviced: %lu\r\n " , Bank.customersServiced);
 
 	//Average Queue Time
 	printf("Average Queue Time: %f minutes\r\n " , ((float)((Bank.totalTimeInQueue/2.)/ (float) Bank.customersServiced))/2. );
@@ -20,7 +20,7 @@ void calculate_metrics(){
 	printf("Maximum Queue Time: %f minutes\r\n ", ((float)Bank.maxTimeInQueueCust)/2. );
 
 	//Longest Line
-	printf("Longest Line: %f\r\n ", (float)Bank.maxNumInQueue );
+	printf("Longest Line: %lu\r\n ", Bank.maxNumInQueue );
 
 	//Average Transaction Time
 	printf("Average Transaction Time: %f minutes\r\n ", ((float)(Bank.totalTimeWithTellers/(float)Bank.customersServiced))/2. );
@@ -29,12 +29,12 @@ void calculate_metrics(){
 	printf("Maximum Transaction Time: %f minutes\r\n ", ((float)Bank.maxTimeInTransaction)/2. );
 
 	//Average Teller Idle Time
-	printf("Average Teller Idle Time: %f minutes\r\n ", (((float)Bank.totalTellerDowntime/Bank.totalTellerIdles)/3.)/2. );
+	printf("Average Teller Idle Time: %f minutes\r\n ", (((float)Bank.totalTellerDowntime)/((float)Bank.totalTellerIdles))/2. );
 
 	if (1){
 		//Total Breaks Per
 		for(int i = 0; i < 3; i++)
-			printf("Teller %d Total Breaks: %f\r\n ", tellers[i]->tellerNum, (float)tellers[i]->numBreaks );
+			printf("Teller %d Total Breaks: %d\r\n ", tellers[i]->tellerNum, tellers[i]->numBreaks );
 
 		//Average break Per
 		for(int i = 0; i < 3; i++)
