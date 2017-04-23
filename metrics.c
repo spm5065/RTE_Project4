@@ -19,6 +19,9 @@ void calculate_metrics(){
 	//Maximum Queue Time
 	printf("Maximum Queue Time: %f minutes\r\n ", ((float)Bank.maxTimeInQueueCust)/2. );
 
+	//Longest Line
+	printf("Longest Line: %f\r\n ", (float)Bank.maxNumInQueue );
+
 	//Average Transaction Time
 	printf("Average Transaction Time: %f minutes\r\n ", ((float)(Bank.totalTimeWithTellers/(float)Bank.customersServiced))/2. );
 
@@ -27,9 +30,6 @@ void calculate_metrics(){
 
 	//Average Teller Idle Time
 	printf("Average Teller Idle Time: %f minutes\r\n ", (((float)Bank.totalTellerDowntime/Bank.totalTellerIdles)/3.)/2. );
-
-	//Longest Line
-	printf("Longest Line: %f\r\n ", (float)Bank.maxNumInQueue );
 
 	if (1){
 		//Total Breaks Per
